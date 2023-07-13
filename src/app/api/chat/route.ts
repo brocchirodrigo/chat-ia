@@ -19,10 +19,10 @@ interface MessageProps {
 export async function POST(req: Request) {
   const { messages }: MessageProps = await req.json();
 
-  console.log(messages);
+  // console.log(messages);
 
   const response = await openai.createChatCompletion({
-    model: "gpt-3.5-turbo",
+    model: "gpt-3.5-turbo-16k", // "gpt-3.5-turbo", "gpt-3.5-turbo-16k", "gpt-4"
     stream: true,
     messages,
     presence_penalty: -1.0,
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
   });
 
   console.log("mensagens: ", messages);
-  console.log("Última mensagens: ", messages[messages.length - 1].content);
+  // console.log("Última mensagens: ", messages[messages.length - 1].content);
 
   const stream = OpenAIStream(response, {
     onCompletion: async (completion: string) => {

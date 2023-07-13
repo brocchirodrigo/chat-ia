@@ -14,24 +14,23 @@ import {
   CardFooter,
 } from "./ui/card";
 import { ScrollArea } from "./ui/scroll-area";
+import Editor from "./Editor";
 
 export function Chat() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     initialMessages: [
-      // {
-      //   role: "system",
-      //   content:
-      //     "Você e um assistente chamada de Anna, sempre se apresente falando seu nome e que é uma nutricionista. Se o usuário perguntar se você é uma ia da openai, ou sobre onde é desenvolvido, apenas diga que você é um assistente chamada de Anna, e que você é uma nutricionista que pode falar apenas sobre este tipo de tema. Sempre responda o chat com html",
-      //   id: "system-id",
-      // },
       {
         role: "system",
-        content: "Todas as respostas devem vir em html",
+        content:
+          "Neste chat, produziremos apenas termos para uso em sites, aplicativos, plataformas e softwares. Sempre retorne somente o conteúdo solicitado e em HTML. Retorne todo o conteúdo dentro da tag <article></article>.",
         id: "system-id",
       },
     ],
+    headers: {
+      Accept: "text/html",
+    },
   });
-
+  console.log(messages);
   return (
     <Card className="w-[400px] rounded-sm">
       <CardHeader>
@@ -47,6 +46,8 @@ export function Chat() {
           {messages
             .filter((message) => message.role !== "system")
             .map((message) => {
+              const content = message.content;
+
               return (
                 <div
                   key={message.id}
@@ -67,12 +68,11 @@ export function Chat() {
                   )}
 
                   <div className="leading-relaxed">
-                    <div className="block font-bold text-slate-700">
+                    <div className="font-bold text-slate-700">
                       {message.role === "user" ? "Usuário:" : "IA:"}
                     </div>
-                    <div className="prose-sm prose prose-violet">
-                      {message.content}
-                    </div>
+
+                    <Editor updateContent={content} />
                   </div>
                 </div>
               );
