@@ -25,8 +25,6 @@ export async function POST(req: Request) {
     model: "gpt-3.5-turbo-16k", // "gpt-3.5-turbo", "gpt-3.5-turbo-16k", "gpt-4"
     stream: true,
     messages,
-    presence_penalty: -1.0,
-    frequency_penalty: 1.0,
   });
 
   console.log("mensagens: ", messages);
