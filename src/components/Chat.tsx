@@ -1,30 +1,34 @@
 "use client";
 
 import { useChat } from "ai/react";
-
+import crypto from "crypto";
+import Editor from "./Editor";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import {
   Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
 } from "./ui/card";
+import { Input } from "./ui/input";
 import { ScrollArea } from "./ui/scroll-area";
-import Editor from "./Editor";
 
 export function Chat() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     initialMessages: [
       {
         role: "system",
-        content:
-          "Neste chat, produziremos apenas termos para uso em sites, aplicativos, plataformas e softwares. Sempre retorne somente o conteúdo solicitado e em HTML. Retorne todo o conteúdo dentro da tag <article></article>.",
-        id: "system-id",
+        content: "Todas as respostas devem ser retornadas em uma <div></div>",
+        id: crypto.randomBytes(20).toString("hex"),
       },
+      // {
+      //   role: "assistant",
+      //   content: "Olá, me chamo Anna, com quem estou falando?",
+      //   id: "system-id",
+      // },
     ],
     headers: {
       Accept: "text/html",
@@ -34,7 +38,7 @@ export function Chat() {
   return (
     <Card className="w-[400px] rounded-sm">
       <CardHeader>
-        <CardTitle>Imaginer Chat AI</CardTitle>
+        <CardTitle>Test Chat AI</CardTitle>
 
         <CardDescription>
           Usando a SDK Vercel AI para criar um ChatBot
